@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
@@ -92,50 +93,56 @@ fun ListDetailLayout(
         },
         detailPane = {
             val content = navigator.currentDestination?.content?.toString() ?: "Select an Item"
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.primaryContainer),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = content)
-                Row {
-                    AssistChip(
-                        onClick = {
-                                  navigator.navigateTo(
-                                      pane = ListDetailPaneScaffoldRole.Extra,
-                                      content = "Option 1"
-                                  )
-                        },
-                        label = {
-                            Text(text = "Option 1")
-                        }
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    AssistChip(
-                        onClick = {
-                            navigator.navigateTo(
-                                pane = ListDetailPaneScaffoldRole.Extra,
-                                content = "Option 2"
-                            )
-                        },
-                        label = {
-                            Text(text = "Option 2")
-                        }
-                    )
+            AnimatedPane {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.primaryContainer),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = content)
+                    Row {
+                        AssistChip(
+                            onClick = {
+                                navigator.navigateTo(
+                                    pane = ListDetailPaneScaffoldRole.Extra,
+                                    content = "Option 1"
+                                )
+                            },
+                            label = {
+                                Text(text = "Option 1")
+                            }
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        AssistChip(
+                            onClick = {
+                                navigator.navigateTo(
+                                    pane = ListDetailPaneScaffoldRole.Extra,
+                                    content = "Option 2"
+                                )
+                            },
+                            label = {
+                                Text(text = "Option 2")
+                            }
+                        )
+                    }
                 }
             }
         },
         extraPane = {
             val content = navigator.currentDestination?.content?.toString() ?: "Select an Option"
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                Text(text = content)
+            AnimatedPane {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.tertiary),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = content)
+                }
             }
+
         }
     )
 
